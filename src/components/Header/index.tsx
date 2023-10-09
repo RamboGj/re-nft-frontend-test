@@ -1,6 +1,9 @@
 'use client'
 
 import { NavigationItem } from '../NavigationLink'
+import { useContext } from 'react'
+import { AppContext } from '@/contexts/AppContext'
+import Link from 'next/link'
 
 export interface NavigationItemProps {
   href: string
@@ -8,7 +11,7 @@ export interface NavigationItemProps {
 }
 
 export function Header() {
-  const isLoggedIn = false
+  const { isLoggedIn } = useContext(AppContext)
 
   const authenticatedNavigationItems: NavigationItemProps[] = [
     {
@@ -44,9 +47,11 @@ export function Header() {
   return (
     <header className="w-full">
       <div className="max-w-[1240px] px-8 flex items-center justify-between py-8 mx-auto">
-        <h1 className="font-poppins font-black text-pink500 text-[2.5rem]">
-          F
-        </h1>
+        <Link href="/">
+          <h1 className="font-poppins font-black text-pink500 text-[2.5rem]">
+            F
+          </h1>
+        </Link>
         <ul className="flex items-center gap-12">
           {isLoggedIn ? (
             <>

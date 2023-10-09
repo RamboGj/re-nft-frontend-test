@@ -1,7 +1,9 @@
-import FontLoader from '@/components/FontLoader'
 import './globals.css'
+import FontLoader from '@/components/FontLoader'
 import { Header } from '@/components/Header'
 import { ToasterComponent } from '@/components/Alerts/ToasterComponent'
+import AppContextProvider from '@/contexts/AppContext'
+import { AddPost } from '@/components/AddPost/AddPost'
 
 export const metadata = {
   title: 'Create Next App',
@@ -16,11 +18,16 @@ export default function RootLayout({
   return (
     <>
       <html lang="en">
-        <body className="max-w-full w-full min-h-screen bg-gray900">
-          <Header />
-          <main>{children}</main>
-          <ToasterComponent />
-        </body>
+        <AppContextProvider>
+          <body className="max-w-full w-full min-h-screen bg-gray900">
+            <Header />
+
+            <AddPost />
+
+            <main>{children}</main>
+            <ToasterComponent />
+          </body>
+        </AppContextProvider>
       </html>
       <FontLoader />
     </>

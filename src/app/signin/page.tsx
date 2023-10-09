@@ -4,12 +4,12 @@ import Input from '@/components/Input'
 import { useForm } from 'react-hook-form'
 import * as zod from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LOCAL_STORAGE } from '@/storage/localStorage/localStorageKeys'
-import { onSaveUserOnLocalStorage } from '@/storage/localStorage/localStorage'
-import toast from 'react-hot-toast'
+import { onSiginUser } from '@/storage/localStorage/localStorage'
 import { useRouter } from 'next/navigation'
+import { useContext } from 'react'
+import { AppContext } from '@/contexts/AppContext'
 
-const signupSchema = zod
+const signinSchema = zod
   .object({
     username: zod
       .string()
@@ -31,13 +31,15 @@ const signupSchema = zod
     path: ['password'],
   })
 
-type SignupSchemaData = zod.infer<typeof signupSchema>
+type SigninSchemaData = zod.infer<typeof signinSchema>
 
-export default function Signup() {
+export default function Signin() {
   const { push } = useRouter()
 
-  const SignupForm = useForm<SignupSchemaData>({
-    resolver: zodResolver(signupSchema),
+  const { setIsLoggedIn } = useContext(AppContext)
+
+  const SigninForm = useForm<SigninSchemaData>({
+    resolver: zodResolver(signinSchema),
     defaultValues: {
       password: '',
       username: '',
@@ -48,13 +50,13 @@ export default function Signup() {
     register,
     handleSubmit,
     formState: { errors },
-  } = SignupForm
+  } = SigninForm
 
-  function onSignup(data: SignupSchemaData) {
+  function onSignin(data: SigninSchemaData) {
     try {
-      onSaveUserOnLocalStorage(data.username, data.password)
-      toast.success('User created successfully.')
-      push('/signin')
+      onSiginUser(data.username, data.password)
+      setIsLoggedIn(true)
+      push('/')
     } catch (err) {
       console.log(err)
     }
@@ -63,10 +65,10 @@ export default function Signup() {
   return (
     <div className="w-full mx-auto max-w-[1240px] px-8 flex flex-col items-center">
       <h1 className="font-poppins font-bold text-[3rem] text-pink300">
-        Sign up
+        Sign in
       </h1>
       <form
-        onSubmit={handleSubmit(onSignup, (errors) => {
+        onSubmit={handleSubmit(onSignin, (errors) => {
           console.log('errs', errors)
         })}
         className="max-w-[720px] h-[360px] w-full bg-gray800 rounded-[20px] shadow-md mt-12 px-10 py-8 flex flex-col items-stretch"
@@ -94,7 +96,7 @@ export default function Signup() {
           type="submit"
           className="mt-auto bg-pink500 rounded-lg h-[50px] font-poppins font-semibold text-white hover:bg-pink600 transition-colors duration-300"
         >
-          Sign up
+          Sign in
         </button>
       </form>
     </div>

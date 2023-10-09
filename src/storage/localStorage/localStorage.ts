@@ -1,6 +1,7 @@
-import { UserProps } from '@/@types/app'
+import { PostProps, UserProps } from '@/@types/app'
 import { LOCAL_STORAGE } from './localStorageKeys'
 import toast from 'react-hot-toast'
+import { SESSION_STORAGE } from '../sessionStorage/sessionStorageKeys'
 
 export function onVerifyIfUserAlreadyExists(username: string) {
   const existentUsers = JSON.parse(
@@ -9,7 +10,7 @@ export function onVerifyIfUserAlreadyExists(username: string) {
 
   if (existentUsers !== null) {
     const userAlreadyExist = existentUsers.filter((user: UserProps) => {
-      const isEqual = Object.is(username, user.username)
+      const isEqual = user.username === username
 
       return isEqual
     })
@@ -41,5 +42,90 @@ export function onSaveUserOnLocalStorage(username: string, password: string) {
     )
   } else {
     localStorage.setItem(LOCAL_STORAGE.USERS, JSON.stringify([user]))
+  }
+}
+
+export function onSiginUser(username: string, password: string) {
+  const existentUsers: UserProps[] | null = JSON.parse(
+    String(localStorage.getItem(LOCAL_STORAGE.USERS)),
+  )
+
+  const user = {
+    username,
+    password,
+  }
+
+  if (existentUsers !== null) {
+    const userFound = existentUsers.filter((userFiltered) => {
+      const userIsEqual =
+        user.username === userFiltered.username &&
+        user.password === userFiltered.password
+
+      return userIsEqual
+    })
+
+    if (userFound.length > 0) {
+      toast.success('Successfully logged in.')
+      sessionStorage.setItem(
+        SESSION_STORAGE.LOGGED_IN_USER,
+        JSON.stringify(userFound[0]),
+      )
+    } else {
+      toast.error('An user with these data was not found.')
+      throw new Error('There is no user save on storage.')
+    }
+  } else {
+    throw new Error('There is no user save on storage.')
+  }
+}
+
+export function onPostMessage(message: string) {
+  const existentPosts: PostProps[] | null = JSON.parse(
+    String(localStorage.getItem(LOCAL_STORAGE.POSTS)),
+  )
+
+  console.log('existentPosts', existentPosts)
+
+  const creator: UserProps | null = JSON.parse(
+    String(sessionStorage.getItem(SESSION_STORAGE.LOGGED_IN_USER)),
+  )
+
+  console.log('creator', creator)
+
+  const post: PostProps = {
+    username: String(creator?.username),
+    createdAt: new Date(),
+    message,
+  }
+
+  console.log('post', post)
+
+  if (existentPosts !== null) {
+    console.log('ano0ther post')
+
+    localStorage.setItem(
+      LOCAL_STORAGE.POSTS,
+      JSON.stringify([...existentPosts, post]),
+    )
+    toast.success('Successfully posted.')
+    return post
+  } else {
+    console.log('firts post')
+
+    localStorage.setItem(LOCAL_STORAGE.POSTS, JSON.stringify([post]))
+    toast.success('Successfully posted.')
+    return post
+  }
+}
+
+export function onGetAllPosts() {
+  const existentPosts: PostProps[] | null = JSON.parse(
+    String(localStorage.getItem(LOCAL_STORAGE.POSTS)),
+  )
+
+  if (existentPosts !== null) {
+    return existentPosts
+  } else {
+    return []
   }
 }
