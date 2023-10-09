@@ -32,7 +32,7 @@ export function AddPost() {
     },
   })
 
-  const { register, handleSubmit } = AddPostForm
+  const { register, handleSubmit, reset } = AddPostForm
 
   function onPost(data: AddPostSchemaData) {
     console.log('data', data)
@@ -46,6 +46,7 @@ export function AddPost() {
       }
     })
     setIsModalOpened(false)
+    reset()
   }
 
   if (isLoggedIn) {
