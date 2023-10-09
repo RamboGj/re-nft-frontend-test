@@ -65,9 +65,7 @@ export default function Signup() {
         Sign up
       </h1>
       <form
-        onSubmit={handleSubmit(onSignup, (errors) => {
-          console.log('errs', errors)
-        })}
+        onSubmit={handleSubmit(onSignup)}
         className="max-w-[720px] h-[360px] w-full bg-gray800 rounded-[20px] shadow-md mt-12 px-10 py-8 flex flex-col items-stretch"
       >
         <div className="flex flex-col gap-y-4">

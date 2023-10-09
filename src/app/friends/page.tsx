@@ -9,7 +9,7 @@ export default function Friends() {
   const { user } = useContext(AppContext)
 
   return (
-    <div className="w-full mx-auto py-20">
+    <div className="w-full mx-auto py-20 px-8">
       <div className="max-w-[1120px] w-full flex-1 mx-auto flex flex-col items-center">
         <h1 className="text-white text-[2.5rem] font-poppins font-semibold">
           Friends
