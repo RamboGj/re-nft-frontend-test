@@ -70,6 +70,7 @@ export function onSiginUser(username: string, password: string) {
         SESSION_STORAGE.LOGGED_IN_USER,
         JSON.stringify(userFound[0]),
       )
+      return userFound[0]
     } else {
       toast.error('An user with these data was not found.')
       throw new Error('There is no user save on storage.')
@@ -98,11 +99,7 @@ export function onPostMessage(message: string) {
     message,
   }
 
-  console.log('post', post)
-
   if (existentPosts !== null) {
-    console.log('ano0ther post')
-
     localStorage.setItem(
       LOCAL_STORAGE.POSTS,
       JSON.stringify([...existentPosts, post]),
@@ -110,8 +107,6 @@ export function onPostMessage(message: string) {
     toast.success('Successfully posted.')
     return post
   } else {
-    console.log('firts post')
-
     localStorage.setItem(LOCAL_STORAGE.POSTS, JSON.stringify([post]))
     toast.success('Successfully posted.')
     return post
@@ -127,5 +122,109 @@ export function onGetAllPosts() {
     return existentPosts
   } else {
     return []
+  }
+}
+
+export function onAddFriend(username: string) {
+  const loggedInUser: UserProps | null = JSON.parse(
+    String(sessionStorage.getItem(SESSION_STORAGE.LOGGED_IN_USER)),
+  )
+
+  console.log('loggedInUser', loggedInUser)
+
+  const allUsers: UserProps[] | null = JSON.parse(
+    String(localStorage.getItem(LOCAL_STORAGE.USERS)),
+  )
+
+  console.log('allUsers', allUsers)
+
+  const allButLoggedIn: UserProps[] | undefined = allUsers?.filter((user) => {
+    return user.username !== loggedInUser?.username
+  })
+
+  console.log('allButLoggedIn', allButLoggedIn)
+
+  const updatedLoggedInUser: UserProps | null = {
+    username: loggedInUser?.username,
+    password: loggedInUser?.password,
+    friends: loggedInUser?.friends
+      ? [
+          ...loggedInUser?.friends,
+          {
+            username,
+          },
+        ]
+      : [{ username }],
+  }
+
+  console.log('updatedLoggedInUser', updatedLoggedInUser)
+
+  if (typeof allButLoggedIn !== 'undefined') {
+    console.log('eNTROU')
+    localStorage.setItem(
+      LOCAL_STORAGE.USERS,
+      JSON.stringify([...allButLoggedIn, updatedLoggedInUser]),
+    )
+    sessionStorage.setItem(
+      SESSION_STORAGE.LOGGED_IN_USER,
+      JSON.stringify(updatedLoggedInUser),
+    )
+    return updatedLoggedInUser
+  } else {
+    localStorage.setItem(
+      LOCAL_STORAGE.USERS,
+      JSON.stringify([updatedLoggedInUser]),
+    )
+    sessionStorage.setItem(
+      SESSION_STORAGE.LOGGED_IN_USER,
+      JSON.stringify(updatedLoggedInUser),
+    )
+    return updatedLoggedInUser
+  }
+}
+
+export function onRemoveFriend(username: string) {
+  const loggedInUser: UserProps | null = JSON.parse(
+    String(sessionStorage.getItem(SESSION_STORAGE.LOGGED_IN_USER)),
+  )
+
+  const allUsers: UserProps[] | null = JSON.parse(
+    String(localStorage.getItem(LOCAL_STORAGE.USERS)),
+  )
+
+  const allButLoggedIn: UserProps[] | undefined = allUsers?.filter((user) => {
+    return user.username !== loggedInUser?.username
+  })
+
+  const allFriendsButRemoved = loggedInUser?.friends.filter((friend) => {
+    return friend.username !== username
+  })
+
+  const updatedLoggedInUser: UserProps | null = {
+    username: loggedInUser?.username,
+    password: loggedInUser?.password,
+    friends: allFriendsButRemoved || [],
+  }
+
+  if (typeof allButLoggedIn !== 'undefined') {
+    localStorage.setItem(
+      LOCAL_STORAGE.USERS,
+      JSON.stringify([...allButLoggedIn, updatedLoggedInUser]),
+    )
+    sessionStorage.setItem(
+      SESSION_STORAGE.LOGGED_IN_USER,
+      JSON.stringify(updatedLoggedInUser),
+    )
+    return updatedLoggedInUser
+  } else {
+    localStorage.setItem(
+      LOCAL_STORAGE.USERS,
+      JSON.stringify([updatedLoggedInUser]),
+    )
+    sessionStorage.setItem(
+      SESSION_STORAGE.LOGGED_IN_USER,
+      JSON.stringify(updatedLoggedInUser),
+    )
+    return updatedLoggedInUser
   }
 }

@@ -11,7 +11,7 @@ export interface NavigationItemProps {
 }
 
 export function Header() {
-  const { isLoggedIn } = useContext(AppContext)
+  const { isLoggedIn, user } = useContext(AppContext)
 
   const authenticatedNavigationItems: NavigationItemProps[] = [
     {
@@ -24,7 +24,7 @@ export function Header() {
     },
     {
       label: 'My profile',
-      href: '/:username',
+      href: `/${user?.username}`,
     },
     {
       label: 'Sign out',

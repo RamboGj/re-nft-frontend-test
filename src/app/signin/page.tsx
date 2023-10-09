@@ -8,6 +8,7 @@ import { onSiginUser } from '@/storage/localStorage/localStorage'
 import { useRouter } from 'next/navigation'
 import { useContext } from 'react'
 import { AppContext } from '@/contexts/AppContext'
+import { UserProps } from '@/@types/app'
 
 const signinSchema = zod
   .object({
@@ -36,7 +37,7 @@ type SigninSchemaData = zod.infer<typeof signinSchema>
 export default function Signin() {
   const { push } = useRouter()
 
-  const { setIsLoggedIn } = useContext(AppContext)
+  const { setIsLoggedIn, setUser } = useContext(AppContext)
 
   const SigninForm = useForm<SigninSchemaData>({
     resolver: zodResolver(signinSchema),
@@ -54,8 +55,10 @@ export default function Signin() {
 
   function onSignin(data: SigninSchemaData) {
     try {
-      onSiginUser(data.username, data.password)
+      const user: UserProps = onSiginUser(data.username, data.password)
+
       setIsLoggedIn(true)
+      setUser(user)
       push('/')
     } catch (err) {
       console.log(err)

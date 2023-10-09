@@ -1,6 +1,6 @@
 'use client'
 
-import { PostCard } from '@/components/Posts/PostCard'
+import { PostCard } from '@/components/Cards/PostCard'
 import { AppContext } from '@/contexts/AppContext'
 import { useContext } from 'react'
 

@@ -1,6 +1,6 @@
 export interface UserProps {
-  username: string
-  password: string
+  username: string | undefined
+  password: string | undefined
   friends: {
     username: string
   }[]

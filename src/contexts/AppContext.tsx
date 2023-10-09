@@ -1,6 +1,6 @@
 'use client'
 
-import { PostProps } from '@/@types/app'
+import { PostProps, UserProps } from '@/@types/app'
 import { onGetAllPosts } from '@/storage/localStorage/localStorage'
 import { SESSION_STORAGE } from '@/storage/sessionStorage/sessionStorageKeys'
 import {
@@ -17,6 +17,9 @@ interface AppContextProps {
 
   posts: PostProps[] | null
   setPosts: Dispatch<SetStateAction<PostProps[] | null>>
+
+  user: UserProps | null
+  setUser: Dispatch<SetStateAction<UserProps | null>>
 
   sortedByNewestPosts: PostProps[] | undefined
 }
@@ -51,6 +54,18 @@ export default function AppContextProvider({
     } else return []
   })
 
+  const [user, setUser] = useState<UserProps | null>(() => {
+    if (typeof window !== 'undefined') {
+      const user = JSON.parse(
+        String(sessionStorage.getItem(SESSION_STORAGE.LOGGED_IN_USER)),
+      )
+
+      return user
+    } else {
+      return null
+    }
+  })
+
   const sortedByNewestPosts = posts?.sort(
     (postA, postB) =>
       new Date(postB.createdAt).getTime() - new Date(postA.createdAt).getTime(),
@@ -63,6 +78,8 @@ export default function AppContextProvider({
         setIsLoggedIn,
         posts,
         setPosts,
+        user,
+        setUser,
         sortedByNewestPosts,
       }}
     >
