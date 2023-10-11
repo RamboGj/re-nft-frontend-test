@@ -11,7 +11,7 @@
   "dependencies": {
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.1",
-    "@phosphor-icons/react": "^2.0.13",
+    "@phosphor-icons/react": "^2.1.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@types/node": "20.8.3",
     "@types/react": "18.2.25",
