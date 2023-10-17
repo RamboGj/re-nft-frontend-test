@@ -35,8 +35,6 @@ export function AddPost() {
   const { register, handleSubmit, reset } = AddPostForm
 
   function onPost(data: AddPostSchemaData) {
-    console.log('data', data)
-
     const post = onPostMessage(data.message)
     setPosts((prev) => {
       if (prev) {

@@ -6,6 +6,7 @@ import {
   onAddFriend,
   onRemoveFriend,
 } from '@/storage/localStorage/localStorage'
+import { onSortByNewestDate } from '@/utils/functions'
 import { useContext } from 'react'
 
 export default function UserPage({ params }: { params: { username: string } }) {
@@ -18,15 +19,13 @@ export default function UserPage({ params }: { params: { username: string } }) {
       return friend.username === params.username
     })[0] !== 'undefined'
 
-  const postsToShow = posts
-    ?.filter((post) => {
-      return post.username === params.username
-    })
-    .sort(
-      (postA, postB) =>
-        new Date(postB.createdAt).getTime() -
-        new Date(postA.createdAt).getTime(),
-    )
+  const postsToShow = onSortByNewestDate(
+    posts
+      ? posts?.filter((post) => {
+          return post.username === params.username
+        })
+      : [],
+  )
 
   return (
     <div className="w-full mx-auto py-20 px-8">

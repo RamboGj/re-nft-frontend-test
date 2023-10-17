@@ -3,12 +3,12 @@ import { NavigationItemProps } from './Header'
 
 export function NavigationItem({ href, label, ...rest }: NavigationItemProps) {
   return (
-    <Link {...rest} href={href}>
-      <li className="">
+    <li {...rest}>
+      <Link href={href}>
         <span className="text-lg font-montserrat text-white hover:text-pink500 transition-colors duration-300">
           {label}
         </span>
-      </li>
-    </Link>
+      </Link>
+    </li>
   )
 }

@@ -2,21 +2,22 @@
 
 import { PostCard } from '@/components/Cards/PostCard'
 import { AppContext } from '@/contexts/AppContext'
+import { onSortByNewestDate } from '@/utils/functions'
 
 import { useContext } from 'react'
 
 export default function Feed() {
   const { user, posts } = useContext(AppContext)
 
-  const postsToShow = posts
-    ?.filter((post) => {
-      return user?.friends?.some((friend) => friend.username === post.username)
-    })
-    .sort(
-      (postA, postB) =>
-        new Date(postB.createdAt).getTime() -
-        new Date(postA.createdAt).getTime(),
-    )
+  const postsToShow = onSortByNewestDate(
+    posts
+      ? posts.filter((post) => {
+          return user?.friends?.some(
+            (friend) => friend.username === post.username,
+          )
+        })
+      : [],
+  )
 
   return (
     <div className="w-full mx-auto py-20 px-8">

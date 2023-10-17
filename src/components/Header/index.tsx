@@ -1,12 +1,12 @@
 'use client'
 
 import { NavigationItem } from '../NavigationLink'
-import { useContext, useState } from 'react'
+import { ComponentProps, useContext } from 'react'
 import { AppContext } from '@/contexts/AppContext'
-import Link, { LinkProps } from 'next/link'
+import Link from 'next/link'
 import { HeaderModal } from '../Modals/HeaderModal'
 
-export interface NavigationItemProps extends LinkProps {
+export interface NavigationItemProps extends ComponentProps<'li'> {
   href: string
   label: string
 }

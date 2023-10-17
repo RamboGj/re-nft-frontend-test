@@ -3,6 +3,7 @@
 import { PostProps, UserProps } from '@/@types/app'
 import { onGetAllPosts } from '@/storage/localStorage/localStorage'
 import { SESSION_STORAGE } from '@/storage/sessionStorage/sessionStorageKeys'
+import { onSortByNewestDate } from '@/utils/functions'
 import {
   Dispatch,
   ReactNode,
@@ -66,10 +67,7 @@ export default function AppContextProvider({
     }
   })
 
-  const sortedByNewestPosts = posts?.sort(
-    (postA, postB) =>
-      new Date(postB.createdAt).getTime() - new Date(postA.createdAt).getTime(),
-  )
+  const sortedByNewestPosts = onSortByNewestDate(posts || [])
 
   return (
     <AppContext.Provider
