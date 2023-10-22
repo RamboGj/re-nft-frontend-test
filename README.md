@@ -1,4 +1,5 @@
 # Social Media Frontend
+https://vercel.com/rambogj/re-nft-frontend-test
 This is the frontend component of a Social Media web application developed using TypeScript, Next.js, and Tailwind CSS. The Social Media frontend offers a user-friendly interface to interact with the platform, where users can create an account, log in, read posts, connect with friends, and manage their own posts.
 
 ## Features
