@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Social Media Frontend
+This is the frontend component of a Social Media web application developed using TypeScript, Next.js, and Tailwind CSS. The Social Media frontend offers a user-friendly interface to interact with the platform, where users can create an account, log in, read posts, connect with friends, and manage their own posts.
 
-## Getting Started
+## Features
+- User Authentication: Users can create an account, log in securely, and stay logged in using browser Session Storage and LocalStorage for session persistence.
 
-First, run the development server:
+- Post Management: Users can read all platform posts, view their own posts in a profile page, and create new posts. They can also access other users' profile pages and read their posts.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Friendship: Users can connect with friends by adding and removing them.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Responsive Design: The application is designed with a responsive and user-friendly UI, thanks to Tailwind CSS.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- TypeScript: The project is developed using TypeScript, providing type safety and helping in catching errors early in the development process.
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Next.js: Next.js is a React framework that enhances performance and provides features like server-side rendering and routing.
